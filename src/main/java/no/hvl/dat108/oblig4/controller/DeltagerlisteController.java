@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpSession;
 
+import java.util.List;
+
+import static org.apache.logging.log4j.util.LambdaUtil.getAll;
+
 @Controller
 public class DeltagerlisteController {
     // URL verdier
@@ -38,10 +42,17 @@ public class DeltagerlisteController {
     }
 
     @GetMapping(value = "${url.listURL}")
-    public String guests(Model model) {
+    public String guests(Model model, HttpSession session) {
+        if (!LoginUtil.isUserLoggedIn(session)){
+            return "redirect:" + loginURL;
+        }
+
         deltaker = LoginUtil.getLoggedIn();
 
+        List<Deltager> list = json.getAll();
 
+        model.addAttribute("user", deltaker);
+        model.addAttribute("list", list);
 
         return listeURL;
     }

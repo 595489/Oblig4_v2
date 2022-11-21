@@ -14,7 +14,7 @@
 <body>
 <h2>Logg inn</h2>
 <%--<p style="color:red;"></p>--%>
-<form:form action="login" method="post">
+<form:form action="loggedIn" method="post">
     <fieldset>
 <%--        <label for="mobil">--%>
             Mobil:</label> <input type="text" name="mobil" placeholder="mobil">

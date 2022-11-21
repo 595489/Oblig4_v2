@@ -42,14 +42,14 @@ public class LoginController {
         return loginURL;
     }
 
-    @PostMapping(value = "${url.loginURL}")
-    public String tryLogin(Model model, @RequestParam(name = "password") String password,
+    @PostMapping(value = "loggedIn")
+    public String tryLogin(Model model, @RequestParam(name = "passord") String password,
                            HttpServletRequest request, RedirectAttributes ra,
                            @RequestParam(name = "mobil") String mobil,
                            @RequestParam(name = "passord") String passord) {
         Deltager d = dao.get(mobil);
-        if (!(PassordUtil.validerMedSalt(passord, d.getPassordSalt(), d.getPassordHash()
-        ))){
+        System.out.println(d);
+        if (!(PassordUtil.validerMedSalt(passord, d.getPassordSalt(), d.getPassordHash()))){
             ra.addFlashAttribute("invalidPassword", invalidPasswordMsg);
             return "redirect:" + loginURL;
         }

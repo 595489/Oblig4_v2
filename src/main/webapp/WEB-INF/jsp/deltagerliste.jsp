@@ -19,26 +19,45 @@
 		<th align="left">Navn</th>
 		<th align="left">Mobil</th>
 	</tr>
-	<tbody>
-	<c:forEach items="${deltagerliste}" var="deltager">
+	<c:forEach var="d" items="${list}">
 		<c:choose>
-			<c:when test="${deltager.mobilnr.equals(deltager.mobilnr)}">
-				<tr bgcolor="#aaffaa">
-					<td align="center">${deltager.kjonn.equals("k") ? "&#9792" : "&#9794"}</td>
-					<td>${deltager.fornavn}, ${deltager.etternavn}</td>
-					<td>${deltager.mobilnr}</td>
+			<c:when test="${d.mobil.equals(user.mobil)}">
+				<tr style="background-color: #aaffaa">
+					<td>${d.kjonn}</td>
+					<td>${d.fornavn}, ${d.etternavn}</td>
+					<td>${d.mobil}</td>
 				</tr>
 			</c:when>
 			<c:otherwise>
-				<tr bgcolor="#ffffff">
-					<td align="center">${deltager.kjonn.equals("k") ? "&#9792" : "&#9794"}</td>
-					<td>${deltager.fornavn}, ${deltager.etternavn}</td>
-					<td>${deltager.mobilnr}</td>
+				<tr style="background-color: #ffffff">
+					<td>${d.kjonn}</td>
+					<td>${d.fornavn}, ${d.etternavn}</td>
+					<td>${d.mobil}</td>
 				</tr>
 			</c:otherwise>
 		</c:choose>
 	</c:forEach>
-	</tbody>
+
+<%--	<tbody>--%>
+<%--	<c:forEach var="deltager" items="${list}">--%>
+<%--		<c:choose>--%>
+<%--			<c:when test="${deltager.mobil.equals(deltaker.mobil)}">--%>
+<%--				<tr bgcolor="#aaffaa">--%>
+<%--					<td align="center">${deltager.kjonn}</td>--%>
+<%--					<td>${deltager.fornavn}, ${deltager.etternavn}</td>--%>
+<%--					<td>${deltager.mobil}</td>--%>
+<%--				</tr>--%>
+<%--			</c:when>--%>
+<%--			<c:otherwise>--%>
+<%--				<tr bgcolor="#ffffff">--%>
+<%--					<td align="center">${deltager.kjonn}</td>--%>
+<%--					<td>${deltager.fornavn}, ${deltager.etternavn}</td>--%>
+<%--					<td>${deltager.mobil}</td>--%>
+<%--				</tr>--%>
+<%--			</c:otherwise>--%>
+<%--		</c:choose>--%>
+<%--	</c:forEach>--%>
+<%--	</tbody>--%>
 </table>
 <br/>
 <form:form action="logout" method="get">

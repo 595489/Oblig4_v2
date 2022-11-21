@@ -12,6 +12,7 @@ public class LoginUtil {
 
     public static void logoutUser(HttpSession session){
         session.invalidate();
+        deltager = null;
         isLoggedIn = false;
     }
 
