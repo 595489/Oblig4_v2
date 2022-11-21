@@ -37,27 +37,6 @@
 			</c:otherwise>
 		</c:choose>
 	</c:forEach>
-
-<%--	<tbody>--%>
-<%--	<c:forEach var="deltager" items="${list}">--%>
-<%--		<c:choose>--%>
-<%--			<c:when test="${deltager.mobil.equals(deltaker.mobil)}">--%>
-<%--				<tr bgcolor="#aaffaa">--%>
-<%--					<td align="center">${deltager.kjonn}</td>--%>
-<%--					<td>${deltager.fornavn}, ${deltager.etternavn}</td>--%>
-<%--					<td>${deltager.mobil}</td>--%>
-<%--				</tr>--%>
-<%--			</c:when>--%>
-<%--			<c:otherwise>--%>
-<%--				<tr bgcolor="#ffffff">--%>
-<%--					<td align="center">${deltager.kjonn}</td>--%>
-<%--					<td>${deltager.fornavn}, ${deltager.etternavn}</td>--%>
-<%--					<td>${deltager.mobil}</td>--%>
-<%--				</tr>--%>
-<%--			</c:otherwise>--%>
-<%--		</c:choose>--%>
-<%--	</c:forEach>--%>
-<%--	</tbody>--%>
 </table>
 <br/>
 <form:form action="logout" method="get">

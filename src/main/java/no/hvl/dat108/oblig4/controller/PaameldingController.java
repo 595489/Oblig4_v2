@@ -10,12 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 //import java.util.Objects;
 
 @Controller
@@ -39,7 +41,11 @@ public class PaameldingController {
     private DeltakerDAO json;
 
     @GetMapping
-    public String standard(Model model){
+    public String standard(Model model, HttpSession session){
+        if (LoginUtil.isUserLoggedIn(session)){
+            return "redirect:" + listeURL;
+        }
+        model.addAttribute("deltager", new Deltager());
         return registerURL;
     }
 
@@ -48,21 +54,22 @@ public class PaameldingController {
         if (LoginUtil.isUserLoggedIn(session)){
             return "redirect:" + listeURL;
         }
+        model.addAttribute("deltager", new Deltager());
+
         return registerURL;
     }
 
     @PostMapping("registerUser")
-    public String registerUser(Model model,
+    public String registerUser(Model model, @Valid @ModelAttribute("deltager") Deltager deltager,
+                               BindingResult bindingResult,
                                RedirectAttributes ra, HttpServletRequest request,
-                               @RequestParam(name = "fornavn") String fornavn,
-                               @RequestParam(name = "etternavn") String etternavn,
                                @RequestParam(name = "mobil") String mobil,
                                @RequestParam(name = "passord") String passord,
                                @RequestParam(name = "passordRep") String passordRep,
                                @RequestParam(name = "gender") String kjonn) {
-//        if(bindingResult.hasErrors()) {
-//            return registerURL;
-//        }
+        if(bindingResult.hasErrors()) {
+            return registerURL;
+        }
         if (!(passord.equals(passordRep))){
             ra.addFlashAttribute("noPassMatch", noPassMatchMsg);
             return "redirect:" + registerURL;
@@ -75,15 +82,14 @@ public class PaameldingController {
         String salt = PassordUtil.genererTilfeldigSalt();
         String hash = PassordUtil.hashMedSalt(passord, salt);
 
-        Deltager d = new Deltager(fornavn, etternavn, kjonn, mobil, hash, salt);
-        json.save(d);
+        deltager.setKjonn(kjonn);
+        deltager.setPassordHash(hash);
+        deltager.setPassordSalt(salt);
 
-        LoginUtil.loginUser(request, d);
+        json.save(deltager);
 
-//        System.out.println(d + " Er logget inn?");
-//        System.out.println(d.getFornavn() + " " + d.getEtternavn() + " " + d.getMobil() + " " + d.getKjonn());
-//        System.out.println("Salt: " + d.getPassordSalt() + " Hash: " + d.getPassordHash());
-//        System.out.println(LoginUtil.getLoggedIn());
+        LoginUtil.loginUser(request, deltager);
+
         return "redirect:" + confirmURL;
     }
 }

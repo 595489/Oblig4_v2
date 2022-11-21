@@ -9,15 +9,15 @@ import javax.validation.constraints.Pattern;
 //@Table(schema = "dat108oblig4", name = "deltager")
 public class Deltager {
 
-    @Pattern(regexp = "^[A-Z][a-z_-]{2,20}$")
+    @Pattern(regexp = "^[A-Z][a-z_-]{2,20}$", message = "Må inneholde 2 tegn, Stor forbokstav")
     private String fornavn;
-    @Pattern(regexp = "^[A-Z][a-z_-]{2,20}$")
+    @Pattern(regexp = "^[A-Z][a-z_-]{2,20}$", message = "Må inneholde 2 tegn, Stor forbokstav")
     private String etternavn;
     @Pattern(regexp = "\\b(?=\\w{4,6}\\b)\\w(mann|kvinne)\\w*")
     private String kjonn;
 //    @Id
 //    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Pattern(regexp = "^[0-9]{8}$")
+    @Pattern(regexp = "^[0-9]{8}$", message = "Må være 8 siffer")
     private String mobil;
     private String passordHash;
     private String passordSalt;

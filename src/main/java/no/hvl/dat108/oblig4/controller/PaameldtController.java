@@ -27,15 +27,12 @@ public class PaameldtController {
 
     @GetMapping(value = "${url.confirmURL}")
     public String Paameldt(Model model, HttpSession session){
-//        System.out.println("HEI");
 
         if (!LoginUtil.isUserLoggedIn(session)){
             return "redirect:" + loginURL;
         }
 
         Deltager d = LoginUtil.getLoggedIn();
-
-//        System.out.println(d);
 
         model.addAttribute("deltager", d);
 

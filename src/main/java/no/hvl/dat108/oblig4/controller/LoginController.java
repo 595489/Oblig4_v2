@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
@@ -38,19 +39,21 @@ public class LoginController {
     private DeltakerDAO dao;
 
     @GetMapping(value = "${url.loginURL}")
-    public String login(Model model){
+    public String login(Model model, HttpSession session){
+        if (LoginUtil.isUserLoggedIn(session)){
+            return "redirect:" + listeURL;
+        }
+
         return loginURL;
     }
 
     @PostMapping(value = "loggedIn")
     public String tryLogin(Model model, @RequestParam(name = "passord") String password,
                            HttpServletRequest request, RedirectAttributes ra,
-                           @RequestParam(name = "mobil") String mobil,
-                           @RequestParam(name = "passord") String passord) {
+                           @RequestParam(name = "mobil") String mobil) {
         Deltager d = dao.get(mobil);
-        System.out.println(d);
-        if (!(PassordUtil.validerMedSalt(passord, d.getPassordSalt(), d.getPassordHash()))){
-            ra.addFlashAttribute("invalidPassword", invalidPasswordMsg);
+        if (!(PassordUtil.validerMedSalt(password, d.getPassordSalt(), d.getPassordHash())) || d == null){
+            ra.addFlashAttribute("error", invalidPasswordMsg);
             return "redirect:" + loginURL;
         }
 
