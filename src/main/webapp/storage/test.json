@@ -1,0 +1,5 @@
+{"deltagere":[
+  {"Kjonn":"Mann","Mobil":"80080800","etternavn":"Pettersen","salt":"SALT","fornavn":"Per","hash":"HASH"},
+  {"Kjonn":"Mann","Mobil":"00030333","etternavn":"Hansen","salt":"SECONDSALT","fornavn":"Hans","hash":"SECONDHASH"},
+  {"Kjonn":"Kvinne","Mobil":"50055005","etternavn":"Listhaug","salt":"LISASALT","fornavn":"Lisa","hash":"LISAHASH"}
+]}
