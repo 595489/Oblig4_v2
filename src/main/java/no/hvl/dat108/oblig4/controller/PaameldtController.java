@@ -3,11 +3,13 @@ package no.hvl.dat108.oblig4.controller;
 import no.hvl.dat108.oblig4.model.Deltager;
 import no.hvl.dat108.oblig4.utils.LoginUtil;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpSession;
 
+@Controller
 public class PaameldtController {
     // URL verdier
     @Value("${url.listURL}") private String listeURL;
@@ -27,8 +29,8 @@ public class PaameldtController {
     public String Paameldt(Model model, HttpSession session){
         System.out.println("HEI");
 
-        if (LoginUtil.isUserLoggedIn(session)){
-            return "redirect:" + listeURL;
+        if (!LoginUtil.isUserLoggedIn(session)){
+            return "redirect:" + loginURL;
         }
 
         Deltager d = LoginUtil.getLoggedIn();
@@ -37,7 +39,7 @@ public class PaameldtController {
 
         model.addAttribute("deltager", d);
 
-        return registerURL;
+        return confirmURL;
     }
 
     

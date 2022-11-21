@@ -1,11 +1,15 @@
 package no.hvl.dat108.oblig4.controller;
 
+import no.hvl.dat108.oblig4.model.Deltager;
 import no.hvl.dat108.oblig4.model.DeltakerDAO;
+import no.hvl.dat108.oblig4.utils.LoginUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class DeltagerlisteController {
@@ -25,11 +29,20 @@ public class DeltagerlisteController {
 
     @Autowired
     private DeltakerDAO json;
+    private Deltager deltaker;
 
     @GetMapping(value = "${url.logoutURL}")
-    public String loggout(Model model) {return loginURL;}
+    public String loggout(Model model, HttpSession session) {
+        LoginUtil.logoutUser(session);
+        return loginURL;
+    }
 
     @GetMapping(value = "${url.listURL}")
-    public String guests(Model model) {return listeURL;}
+    public String guests(Model model) {
+        deltaker = LoginUtil.getLoggedIn();
 
+
+
+        return listeURL;
+    }
 }

@@ -15,7 +15,7 @@ import java.util.*;
 @Qualifier("json")
 public class DeltagerJSON implements DeltakerDAO{
     JSONObject jsonObject = new JSONObject();
-    String fileName = "./src/main/webapp/storage/test.json";
+    String fileName = "./test.json";
 
     @Override
     public Deltager get(String mobil) {
